@@ -1,8 +1,18 @@
-import React from 'react'
+import { BrowserRouter as Router, Routes, Route, } from "react-router-dom";
+// Pages
+import Lobby from "./pages/Lobby";
+import CodeBlock from "./pages/CodeBlock";
 
-const App = () => {
+function App() {
   return (
-    <div>App</div>
+    <>
+      <Router>
+        <Routes>
+          <Route path='/' element={<Lobby />} />
+          <Route path='room/:name' element={<CodeBlock />} />
+        </Routes>
+      </Router>
+    </>
   )
 }
 
