@@ -1,10 +1,9 @@
 /*IMPORT DEPENDENCE*/
-const express = require("express");
+const app = require("express")()
 require("dotenv").config();
 const mongoose = require("mongoose");
 const cors = require("cors");
-const connectDB = require("./config/configDB");
-const app = express();
+require('./config/database');
 
 
 /* DISCONNECTED CONFIGURATIONS FROM THE DATABASE */

@@ -1,0 +1,9 @@
+{
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#5c030a",
+    "titleBar.activeBackground": "#5c030a",
+    "titleBar.activeForeground": "#e2dad3",
+    "titleBar.": "#0f0e0d"
+  },
+  "cSpell.ignoreWords": ["darklogo", "lightlogo"]
+}
