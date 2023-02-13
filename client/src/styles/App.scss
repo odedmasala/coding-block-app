@@ -1,1 +1,13 @@
 @import "../pages/Lobby", "../pages/CodeBlock";
+
+* {
+  padding: 0px;
+  margin: 0px;
+}
+.btn{
+  width: 70px;
+  height: 30px;
+  background-color: rgb(31, 52, 174);
+  border-radius: 50px;
+  cursor: pointer;
+}
