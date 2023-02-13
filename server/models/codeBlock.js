@@ -7,6 +7,6 @@ const codeBlockSchema = new mongoose.Schema({
   codeSolution: String,
 });
 
-const codeBlock = mongoose.model("codeBlock", codeBlockSchema);
+const codeBlock = mongoose.model("codeblocks", codeBlockSchema);
 
 module.exports = codeBlock;

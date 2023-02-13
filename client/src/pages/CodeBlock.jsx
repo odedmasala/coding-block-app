@@ -6,44 +6,39 @@ import { a11yDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import io from "socket.io-client";
 
 const server_erl = import.meta.env.VITE_WS_URL;
-const socket = io(server_erl);
+
 const CodeBlock = () => {
   const { name: roomName } = useParams();
-  const [isConnected, setIsConnected] = useState(socket.connected);
   const [lastPong, setLastPong] = useState(null);
+  const [editorSocket, setEditorSocket] = useState();
+  const [roomData, setRoomData] = useState(null);
 
   const getDataFromServer = () => {
-    socket.emit("room-data", roomName);
+    socket.emit("send-room-name", roomName);
   };
+  const socket = io(server_erl);
   useEffect(() => {
+    setEditorSocket(socket);
     socket.on("connect", (data) => {
-      setIsConnected(true);
+      getDataFromServer();
     });
-    // client-side
-    socket.emit("hello", "world");
+
+    socket.on("receive-codeBlock", (data) => {
+      console.log(data);
+      setRoomData({...data})
+      console.log(roomData);
+    });
+
     socket.on("disconnect", () => {
-      setIsConnected(false);
     });
-    getDataFromServer()
-  },[socket]);
-  const codeBlockDocument = {
-    _id: 1,
-    blockTitle: "map loop room",
-    CodeToEdit: `const numArray = [1, 10, 5, 20, 42, 11, 28, 31, 61, 39];
-  // * return from the function eace number with plus 5
-  function mapNumbars(array) {
-//   write your code below
- let filterArray;
-  }`,
-    codeSolution: "54",
-    isMentor: true,
-  };
+  },[roomName]);
+
   return (
     <>
-      <div className="codeBlock-container">
+    {roomData ?  <div className="codeBlock-container">
         <div className="codeBlock-title">
           <h1>CodeBlock</h1>
-          <h3>{codeBlockDocument.blockTitle}</h3>
+          <h3>{roomData.blockTitle}</h3>
         </div>
         <div className="editor-container">
           <Editor
@@ -52,10 +47,11 @@ const CodeBlock = () => {
             height="300px"
             width="80%"
             defaultLanguage="javascript"
-            defaultValue={codeBlockDocument.CodeToEdit}
+            defaultValue={roomData.CodeToEdit}
           />
         </div>
-      </div>
+      </div>: "loading"}
+
     </>
   );
 };

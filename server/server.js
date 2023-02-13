@@ -6,6 +6,7 @@ const cors = require("cors");
 app.use(cors());
 const server = require("http").createServer(app);
 const socketIo = require("socket.io");
+const { findRoomName } = require("./controllers/codeBlock");
 let userCount = 0;
 const client = process.env.CLINT_URL;
 
@@ -18,8 +19,14 @@ const io = socketIo(server, {
 
 io.on("connection", (socket) => {
   console.log("New User Connected.  ID : " + socket.id);
-  socket.on("room-data", (data) => {
-    console.log(data);
+
+   // Get room and send back the code
+  socket.on("send-room-name", async (roomName) => {
+    console.log(roomName);
+    const CodeBlockRoom = await findRoomName(roomName);
+    console.log(CodeBlockRoom);
+    socket.join(roomName);
+    socket.emit("receive-codeBlock",CodeBlockRoom)
   });
 
   socket.on("disconnect", () => {
