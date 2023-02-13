@@ -47,6 +47,44 @@
   margin-right: 10px;
 }
 
+.codeBlock-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.codeBlock-container .codeBlock-title {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+}
+.codeBlock-container .codeBlock-title h1 {
+  text-align: center;
+  margin-top: 10px;
+}
+.codeBlock-container .codeBlock-title h3 {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.codeBlock-container .editor-container {
+  margin-top: 10px;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.codeBlock-container .solution-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.codeBlock-container .solution-container h3 {
+  text-align: center;
+}
 * {
   padding: 0px;
   margin: 0px;

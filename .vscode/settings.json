@@ -5,5 +5,11 @@
     "titleBar.activeForeground": "#e2dad3",
     "titleBar.": "#0f0e0d"
   },
-  "cSpell.ignoreWords": ["darklogo", "lightlogo"]
+  "cSpell.ignoreWords": [
+    "darklogo",
+    "lightlogo"
+  ],
+  "cSpell.words": [
+    "Ducemonet"
+  ]
 }
