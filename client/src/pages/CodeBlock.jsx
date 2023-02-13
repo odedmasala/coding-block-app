@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import Editor from "@monaco-editor/react";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { a11yDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import io from 'socket.io-client';
 
+const socket = io();
 const CodeBlock = () => {
   const codeBlockDocument = {
+    _id: 1,
     blockTitle: "map loop room",
     CodeToEdit: `const numArray = [1, 10, 5, 20, 42, 11, 28, 31, 61, 39];
   // * return from the function eace number with plus 5
@@ -12,13 +15,8 @@ const CodeBlock = () => {
 //   write your code below
  let filterArray;
   }`,
-    codeSolution: `function mapNumbarsSolution(array = []) {
-    let filterArray = array.map((elem) => {
-      return elem + 5;
-    });
-    return filterArray;
-  }`,
-  };
+    codeSolution: "54",
+    isMentor:true,  };
   return (
     <>
       <div className="codeBlock-container">

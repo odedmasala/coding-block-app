@@ -1,23 +1,29 @@
 /*IMPORT DEPENDENCE*/
-const app = require("express")()
-require("dotenv").config();
-const mongoose = require("mongoose");
-const cors = require("cors");
-require('./config/database');
+const express = require("express");
+const cors = require('cors');
+require('dotenv').config();
+const app = express();
+const http = require("http");
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+
+const client = process.env.CLINT_URL
+const io = new Server(server,{
+  cors: {
+    origin: client,
+    methods: ["GET", "POST"]
+  }
+});
 
 
-/* DISCONNECTED CONFIGURATIONS FROM THE DATABASE */
-mongoose.connection.on("disconnected", () => {
-    console.log("mongo DB disconnected");
+io.on("connection", (socket) => {
+  socket.emit("hello", "world");
+  socket.on("ping", (socket) => {
+    io.emit("pong");
   });
-
-  /* SET SERVER PORT */
-const PORT = process.env.PORT || 6001;
-
-/* SETON THE SERVER */
-app.listen(PORT, () => {
-    /* CONNECT TO DB */
-    connectDB();
-    /* INITIALIZE PASSPORT TO SERVER*/
-    console.log(`app listen http://localhost:${PORT}`);
-  });
+});
+const PORT = process.env.PORT || 3001;
+server.listen(PORT, (err) => {
+  if (err) console.log(err);
+  console.log(`listening on *:${PORT}`);
+});
