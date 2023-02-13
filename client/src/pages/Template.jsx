@@ -19,12 +19,6 @@ const Template = () => {
     socket.on("pong", () => {
       setLastPong(new Date().toISOString());
     });
-
-    return () => {
-      socket.off("connect");
-      socket.off("disconnect");
-      socket.off("pong");
-    };
   }, []);
 
   const sendPing = () => {

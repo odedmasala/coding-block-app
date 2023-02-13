@@ -1,5 +1,6 @@
+// Return from the function the sum of two given numbers
 function sum(a,b){
-    // return the sum of a + b
+//   Write your code here
 }
 sum(5,4)
 

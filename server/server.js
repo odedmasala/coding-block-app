@@ -15,7 +15,6 @@ const io = new Server(server,{
   }
 });
 
-
 io.on("connection", (socket) => {
   socket.emit("hello", "world");
   socket.on("ping", (socket) => {

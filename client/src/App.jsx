@@ -10,7 +10,7 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' element={<Lobby />} />
-          <Route path='room/:name' element={<Template />} />
+          <Route path='room/:name' element={<CodeBlock />} />
         </Routes>
       </Router>
     </>

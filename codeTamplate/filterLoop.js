@@ -1,15 +1,19 @@
 const numArray = [5, 7, 14, 10, 11, 9, 20];
-
-// * return from the function eace number with plus 5
-function filterNumbars(array) {
-  //   write your code below
+// Returns from the function, an array filtered from the given array with numbers greater than 8
+function filterNumbers(array) {
+//   Write your code here
 }
+filterNumbers(numArray)
 
-function filterNumbarsSolution(array = []) {
+
+
+
+
+function filterNumbersSolution(array = []) {
   let filterArray = array.filter((elem) => {
     return elem > 8;
   });
   return filterArray;
 }
 
-arry = [14, 10, 11, 9, 20]
+array = [14, 10, 11, 9, 20]
