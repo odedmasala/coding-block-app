@@ -4,12 +4,14 @@ import io from "socket.io-client";
 const server_erl = import.meta.env.VITE_WS_URL;
 const socket = io(server_erl);
 const Template = () => {
+  const { name: roomName } = useParams();
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [lastPong, setLastPong] = useState(null);
 
   useEffect(() => {
     socket.on("connect", (data) => {
       setIsConnected(true);
+      socket.emit("room-data" ,roomName)
     });
 
     socket.on("disconnect", () => {
@@ -19,6 +21,8 @@ const Template = () => {
     socket.on("pong", () => {
       setLastPong(new Date().toISOString());
     });
+
+    
   }, []);
 
   const sendPing = () => {

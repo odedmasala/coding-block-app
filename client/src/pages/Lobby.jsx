@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import io from "socket.io-client";
+
 
 const Lobby = () => {
   return (
@@ -12,54 +14,32 @@ const Lobby = () => {
         <div className="body-container">
           <ul className="code-block-list">
             <li className="code-box-link">
-              <h2>Arrays</h2>
-              <h4>Return the First Element in an Array</h4>
-              <Link to={"room/Arrays"}>
+              <h2>filterLoop</h2>
+              <Link to={"room/filterLoop"}>
                 <div className="room-btn">
                   <button className="btn">continue</button>
                 </div>
               </Link>
             </li>
             <li className="code-box-link">
-              <h2>Arrays</h2>
-              <h4>Return the First Element in an Array</h4>
-              <Link to={"room/Arrays"}>
+              <h2>mapLoop</h2>
+              <Link to={"room/mapLoop"}>
                 <div className="room-btn">
                   <button className="btn">continue</button>
                 </div>
               </Link>
             </li>
             <li className="code-box-link">
-              <h2>Arrays</h2>
-              <h4>Return the First Element in an Array</h4>
-              <Link to={"room/Arrays"}>
+              <h2>reducerLoop</h2>
+              <Link to={"room/reducerLoop"}>
                 <div className="room-btn">
                   <button className="btn">continue</button>
                 </div>
               </Link>
             </li>
             <li className="code-box-link">
-              <h2>Arrays</h2>
-              <h4>Return the First Element in an Array</h4>
-              <Link to={"room/Arrays"}>
-                <div className="room-btn">
-                  <button className="btn">continue</button>
-                </div>
-              </Link>
-            </li>
-            <li className="code-box-link">
-              <h2>Arrays</h2>
-              <h4>Return the First Element in an Array</h4>
-              <Link to={"room/Arrays"}>
-                <div className="room-btn">
-                  <button className="btn">continue</button>
-                </div>
-              </Link>
-            </li>
-            <li className="code-box-link">
-              <h2>Arrays</h2>
-              <h4>Return the First Element in an Array</h4>
-              <Link to={"room/Arrays"}>
+              <h2>sumNumber</h2>
+              <Link to={"room/sumNumber"}>
                 <div className="room-btn">
                   <button className="btn">continue</button>
                 </div>
