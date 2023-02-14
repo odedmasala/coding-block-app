@@ -19,23 +19,37 @@
       margin-top: 10px;
       margin-bottom: 10px;
     }
-
   }
-  .editor-container {
+  .correct-answer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .correct-btn{
+      margin-top: 10px;
+      width: 120px;
+      height: 70px;
+    }
+  }
+  .editor {
     margin-top: 10px;
     width: 80%;
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
-  }
-  .solution-container {
-    display: flex;
-    justify-content: center;
     flex-direction: column;
-    h3{
-        text-align: center;
+    align-items: center;
+    margin-bottom: 20px;
+    .editor-container {
+      margin-top: 10px;
+      width: 80%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
     }
-    .solution-size-container {
+    .check-code-btn {
+      .mentor-btn {
+        background-color: gray;
+        cursor: not-allowed;
+      }
     }
   }
 }

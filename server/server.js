@@ -17,19 +17,37 @@ const io = socketIo(server, {
   },
 });
 
-io.on("connection", (socket) => {
-  console.log("New User Connected.  ID : " + socket.id);
 
-   // Get room and send back the code
+io.on("connection", (socket) => {
+  userCount++;
+  console.log(
+    "New User Connected.  ID : " + socket.id,
+    ", Total users: " + userCount
+  );
+
+  // Get room and send back the code
   socket.on("send-room-name", async (roomName) => {
-    console.log(roomName);
     const CodeBlockRoom = await findRoomName(roomName);
-    console.log(CodeBlockRoom);
     socket.join(roomName);
-    socket.emit("receive-codeBlock",CodeBlockRoom)
+    socket.emit("receive-codeBlock", {
+      ...CodeBlockRoom._doc,
+      user:socket.id,
+      userCount :userCount,
+      isMentor : userCount ===1 ? true : false
+    });
+  });
+socket.on("correct-answer",(roomName)=>{
+  socket.broadcast.to(roomName).emit("Solve-exercise");
+})
+  // Code changes handler
+  socket.on("send-changes", (changes) => {
+    socket.broadcast
+      .to(changes?.roomName)
+      .emit("receive-changes", changes?.code);
   });
 
   socket.on("disconnect", () => {
+    userCount--;
     console.log("User disconnect, total user left", userCount);
   });
 });

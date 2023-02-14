@@ -70,30 +70,49 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
-.codeBlock-container .editor-container {
+.codeBlock-container .correct-answer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.codeBlock-container .correct-answer .correct-btn {
+  margin-top: 10px;
+  width: 120px;
+  height: 70px;
+}
+.codeBlock-container .editor {
+  margin-top: 10px;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.codeBlock-container .editor .editor-container {
   margin-top: 10px;
   width: 80%;
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
 }
-.codeBlock-container .solution-container {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
+.codeBlock-container .editor .check-code-btn .mentor-btn {
+  background-color: gray;
+  cursor: not-allowed;
 }
-.codeBlock-container .solution-container h3 {
-  text-align: center;
-}
+
 * {
   padding: 0px;
   margin: 0px;
 }
 
 .btn {
-  width: 70px;
-  height: 30px;
+  width: 100px;
+  height: 40px;
   background-color: rgb(31, 52, 174);
   border-radius: 50px;
   cursor: pointer;
+  font-size: medium;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  color: wheat;
 }/*# sourceMappingURL=App.css.map */
