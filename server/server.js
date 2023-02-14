@@ -12,7 +12,7 @@ const client = process.env.CLINT_URL;
 
 const io = socketIo(server, {
   cors: {
-    origin: client,
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
