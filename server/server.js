@@ -8,11 +8,11 @@ const server = require("http").createServer(app);
 const socketIo = require("socket.io");
 const { findRoomName } = require("./controllers/codeBlock");
 let userCount = 0;
-const client = process.env.CLINT_URL;
+
 
 const io = socketIo(server, {
   cors: {
-    origin: "*",
+    origin: "https://coding-block-7ryjfs2ru-odedmasala.vercel.app/",
     methods: ["GET", "POST"],
   },
 });
