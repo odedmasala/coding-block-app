@@ -89,6 +89,10 @@
   align-items: center;
   margin-bottom: 20px;
 }
+.codeBlock-container .editor .Wrong-Answer-title {
+  color: red;
+  margin-top: 10px;
+}
 .codeBlock-container .editor .editor-container {
   margin-top: 10px;
   width: 80%;

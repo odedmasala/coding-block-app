@@ -20,11 +20,11 @@
       margin-bottom: 10px;
     }
   }
-  .correct-answer{
+  .correct-answer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    .correct-btn{
+    .correct-btn {
       margin-top: 10px;
       width: 120px;
       height: 70px;
@@ -38,6 +38,12 @@
     flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
+
+    .Wrong-Answer-title {
+      color: red;
+      margin-top: 10px;
+    }
+
     .editor-container {
       margin-top: 10px;
       width: 80%;
