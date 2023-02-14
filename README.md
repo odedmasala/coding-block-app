@@ -2,7 +2,7 @@
 
 A convenient app and code-learning environment that connects students and mentors. The app contains a client built with Vite React and a server built with Node.js Express and Socket.io.
 
-## 🚀 Getting Started
+## Getting Started
 
 ## Clone the repository:
 1. git clone https://github.com/yourusername/code-learning-app.git
@@ -15,22 +15,12 @@ A convenient app and code-learning environment that connects students and mentor
 
 ## 🔑 Environment Variables
 
-- `VITE_WS_URL` : WebSocket URL for the client
+- `VITE_WS_URL` : WebSocket server URL for the client
 - `MONGO_URL` : MongoDB URL for the server
-
-## 👥 Usage
-
-- Students and mentors can create accounts
-- Mentors can create and manage courses
-- Students can enroll in courses and ask questions in real-time
-- Mentors can answer questions and provide feedback
 
 ## 🛠️ Technologies Used
 
 - Vite React (Client)
 - Node.js Express and Socket.io (Server)
 
-## 📝 Note
-
-This app is still under development and subject to change. Feedback and contributions are welcome!
 
