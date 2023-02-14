@@ -5,6 +5,8 @@ import Editor from "@monaco-editor/react";
 // import { a11yDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import io from "socket.io-client";
 import smileImg from "../assets/smile-png-46519.png";
+
+
 const server_erl = import.meta.env.VITE_WS_URL;
 const CodeBlock = () => {
   const { name: roomName } = useParams();
@@ -15,16 +17,16 @@ const CodeBlock = () => {
   const [userChanel, setUserChanel] = useState(null);
   const [wrongAnswer, setWrongAnswer] = useState(false);
 
-  const wrongAnswerMassage = () =>
-    setTimeout(() => <h4>Wrong Answer, check again the code</h4>, 3000);
   useEffect(() => {
     const socket = io(server_erl);
     setSocketEdit(socket);
     socket.on("connect", (data) => {
       socket.emit("send-room-name", roomName);
     });
+    console.log("bla bla bla")
     //  receive codeBlock for display data in the page
     socket.on("receive-codeBlock", (data) => {
+      console.log("receive-codeBlock")
       if (!data) return;
       if (!roomData) {
         setRoomData({
@@ -43,11 +45,13 @@ const CodeBlock = () => {
     });
     //  liston to solve event from the student
     socket.on("Solve-exercise", (arg) => {
+      console.log("Solve-exercise")
       setShowSmile(true);
     });
 
     // Get code changes live
     socket.on("receive-changes", (code) => {
+      console.log("receive-changes")
       if (!code) return;
       if (userChanel?.userCount === 1) {
         setEditorValue(code);
@@ -55,6 +59,7 @@ const CodeBlock = () => {
     });
     // server got error
     socket.on("connect_error", () => {
+      console.log("receive-changes")
       setTimeout(() => socket.connect(), 5000);
     });
     // server disconnect

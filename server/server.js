@@ -19,6 +19,7 @@ const io = socketIo(server, {
 
 
 io.on("connection", (socket) => {
+  console.log("connection");
   userCount++;
   console.log(
     "New User Connected.  ID : " + socket.id,
@@ -27,6 +28,8 @@ io.on("connection", (socket) => {
 
   // Get room and send back the code
   socket.on("send-room-name", async (roomName) => {
+    console.log("send-room-name");
+
     const CodeBlockRoom = await findRoomName(roomName);
     socket.join(roomName);
     socket.emit("receive-codeBlock", {
@@ -37,10 +40,14 @@ io.on("connection", (socket) => {
     });
   });
 socket.on("correct-answer",(roomName)=>{
+  console.log("correct-answer");
+  
   socket.broadcast.to(roomName).emit("Solve-exercise");
 })
   // Code changes handler
   socket.on("send-changes", (changes) => {
+    console.log("send-changes");
+
     socket.broadcast
       .to(changes?.roomName)
       .emit("receive-changes", changes?.code);
