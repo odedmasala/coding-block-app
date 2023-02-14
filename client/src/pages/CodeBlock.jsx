@@ -72,7 +72,9 @@ const CodeBlock = () => {
     if (checkAnswer == roomData.codeSolution) {
       setShowSmile(true);
       socketEdit.emit("correct-answer", roomName);
-      return;
+      return () => {
+        socketEdit.disconnect();
+      };
     }
     setTimeout(() => {
       setWrongAnswer(false);
