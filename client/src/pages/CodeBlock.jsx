@@ -4,7 +4,7 @@ import Editor from "@monaco-editor/react";
 // import SyntaxHighlighter from "react-syntax-highlighter";
 // import { a11yDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import io from "socket.io-client";
-import smileImg from "../../public/assets/smile-png-46519.png";
+import smileImg from "../assets/smile-png-46519.png";
 const server_erl = import.meta.env.VITE_WS_URL;
 const CodeBlock = () => {
   const { name: roomName } = useParams();
@@ -33,7 +33,7 @@ const CodeBlock = () => {
           CodeToEdit: data.CodeToEdit,
           codeSolution: data.codeSolution,
         });
-        if (!userChanel)
+        if (userChanel) return
           setUserChanel({
             user: data.user,
             userCount: data.userCount,
