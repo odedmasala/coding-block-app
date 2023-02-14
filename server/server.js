@@ -12,7 +12,7 @@ let userCount = 0;
 
 const io = socketIo(server, {
   cors: {
-    origin: "https://coding-block-7ryjfs2ru-odedmasala.vercel.app/",
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
