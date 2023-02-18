@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Editor from "@monaco-editor/react";
-// import SyntaxHighlighter from "react-syntax-highlighter";
-// import { a11yDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import io from "socket.io-client";
 import smileImg from "../assets/smile-png-46519.png";
 
@@ -22,10 +20,8 @@ const CodeBlock = () => {
     socket.on("connect", (data) => {
       socket.emit("send-room-name", roomName);
     });
-    console.log("bla bla bla");
     //  receive codeBlock for display data in the page
     socket.on("receive-codeBlock", (data) => {
-      console.log("receive-codeBlock");
       if (!data) return;
       if (!roomData) {
         setRoomData({
@@ -44,13 +40,11 @@ const CodeBlock = () => {
     });
     //  liston to solve event from the student
     socket.on("solve-exercise", (arg) => {
-      console.log("Solve-exercise");
       setShowSmile(true);
     });
 
     // Get code changes live
     socket.on("receive-changes", (code) => {
-      console.log("receive-changes");
       if (!code) return;
       if (userChanel?.userCount === 1) {
         setEditorValue(code);
@@ -58,7 +52,6 @@ const CodeBlock = () => {
     });
     // server got error
     socket.on("connect_error", () => {
-      console.log("receive-changes");
       setTimeout(() => socket.connect(), 5000);
     });
     // server disconnect
