@@ -11,6 +11,7 @@ const { findRoomName } = require("./controllers/codeBlock");
 require("dotenv").config();
 require("./config/database");
 
+
 /*CORS CONNECTION*/
 const io = socketIo(server, {
   cors: {
@@ -19,42 +20,57 @@ const io = socketIo(server, {
   },
 });
 
+let userCount = {
+  filterLoop: new Set(),
+  mapLoop: new Set(),
+  reducerLoop: new Set(),
+  sumNumber: new Set(),
+};
+
   /*SOCKET NETWORK  */
-  let userCount = 0;
 io.on("connection", (socket) => {
     // connect event
   console.log("connection");
-  userCount++;
-  console.log(
-    "New User Connected.  ID : " + socket.id,
-    ", Total users: " + userCount
-  );
-
+ 
   // Get room and send back the code
-  socket.on("send-room-name", async (roomName) => {
-    const CodeBlockRoom = await findRoomName(roomName);
-    socket.join(roomName);
+  socket.on("send-room-name", async (romeInit) => {
+    console.log("send-room-name");
+    userCount[romeInit.roomName].add(romeInit.userId);
+    console.log(
+      "New User Connected.  ID : " + romeInit.userId,
+      `Total users in room ${romeInit.roomName} : ${userCount[romeInit.roomName].size}`
+    );
+    const CodeBlockRoom = await findRoomName(romeInit.roomName);
+    socket.join(romeInit.roomName);
     socket.emit("receive-codeBlock", {
       ...CodeBlockRoom._doc,
-      user:socket.id,
-      userCount :userCount,
-      isMentor : userCount ===1 ? true : false
+      user: socket.id,
+      userCount: userCount,
+      isMentor: userCount[romeInit.roomName].size === 1,
     });
   });
+
    // sent solve-exercise to the other member at the room
-socket.on("correct-answer",(roomName)=>{
-  socket.broadcast.to(roomName).emit("solve-exercise");
-})
+  socket.on("correct-answer", (roomName) => {
+    console.log("correct-answer");
+    socket.broadcast.to(roomName).emit("Solve-exercise");
+  });
+
   // Code changes handler
   socket.on("send-changes", (changes) => {
     socket.broadcast
       .to(changes?.roomName)
       .emit("receive-changes", changes?.code);
   });
+
+  socket.on("remove-user", (romeData) => {
+    console.log(`user ${romeData.userId} deleted`);
+    userCount[romeData.roomName].delete(romeData.userId);
+  });
+
 // disconnect event
   socket.on("disconnect", () => {
-    userCount--;
-    console.log("User disconnect, total user left", userCount);
+    console.log("User disconnect");
   });
 });
 

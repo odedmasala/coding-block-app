@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import React, { useEffect, useState, useCallback } from "react";
+import { useParams, Link, useBeforeUnload } from "react-router-dom";
 import Editor from "@monaco-editor/react";
 import io from "socket.io-client";
 import smileImg from "../assets/smile-png-46519.png";
@@ -13,12 +13,16 @@ const CodeBlock = () => {
   const [socketEdit, setSocketEdit] = useState();
   const [userChanel, setUserChanel] = useState(null);
   const [wrongAnswer, setWrongAnswer] = useState(false);
+  const [userId, setUserId] = useState(Math.floor(Math.random() * 100000));
 
   useEffect(() => {
     const socket = io(server_erl);
     setSocketEdit(socket);
     socket.on("connect", (data) => {
-      socket.emit("send-room-name", roomName);
+      socket.emit("send-room-name", {
+        roomName: roomName,
+        userId: userId,
+      });
     });
     //  receive codeBlock for display data in the page
     socket.on("receive-codeBlock", (data) => {
@@ -55,12 +59,20 @@ const CodeBlock = () => {
       setTimeout(() => socket.connect(), 5000);
     });
     // server disconnect
-    socket.on("disconnect", () => console.log("server disconnected"));
+    socket.on("disconnect", () => {
+      console.log("server disconnected");
+    });
     return () => {
       socket.disconnect();
     };
   }, [userChanel]);
 
+  useBeforeUnload(
+    useCallback(() => {
+      console.log("hii hiii");
+      socketEdit?.emit("remove-user", { roomName: roomName, userId: userId }); // <-- check for null
+    }, [socketEdit, roomName, userId])
+  );
   // check codeblock script with eval global method and return massage
   const checkCodeblock = () => {
     setWrongAnswer(true);
