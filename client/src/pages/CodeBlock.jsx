@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { useParams, Link, useBeforeUnload } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
 import Editor from "@monaco-editor/react";
 import io from "socket.io-client";
 import smileImg from "../assets/smile-png-46519.png";
@@ -50,7 +50,7 @@ const CodeBlock = () => {
     // Get code changes live
     socket.on("receive-changes", (code) => {
       if (!code) return;
-      if (userChanel?.userCount === 1) {
+      if (userChanel?.isMentor) {
         setEditorValue(code);
       }
     });
@@ -63,21 +63,16 @@ const CodeBlock = () => {
       console.log("server disconnected");
     });
     return () => {
+      socket.emit("remove-user", { roomName: roomName, userId: userId });
       socket.disconnect();
     };
   }, [userChanel]);
 
-  useBeforeUnload(
-    useCallback(() => {
-      console.log("hii hiii");
-      socketEdit?.emit("remove-user", { roomName: roomName, userId: userId }); // <-- check for null
-    }, [socketEdit, roomName, userId])
-  );
   // check codeblock script with eval global method and return massage
   const checkCodeblock = () => {
     setWrongAnswer(true);
     const checkEval = eval(editorValue);
-    const checkAnswer = checkEval?.toString(checkEval);
+    const checkAnswer = checkEval?.toString();
     if (checkAnswer == roomData.codeSolution) {
       setShowSmile(true);
       socketEdit.emit("correct-answer", roomName);

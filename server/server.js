@@ -34,7 +34,6 @@ io.on("connection", (socket) => {
  
   // Get room and send back the code
   socket.on("send-room-name", async (romeInit) => {
-    console.log("send-room-name");
     userCount[romeInit.roomName].add(romeInit.userId);
     console.log(
       "New User Connected.  ID : " + romeInit.userId,
@@ -52,8 +51,7 @@ io.on("connection", (socket) => {
 
    // sent solve-exercise to the other member at the room
   socket.on("correct-answer", (roomName) => {
-    console.log("correct-answer");
-    socket.broadcast.to(roomName).emit("Solve-exercise");
+    socket.broadcast.to(roomName).emit("solve-exercise");
   });
 
   // Code changes handler
