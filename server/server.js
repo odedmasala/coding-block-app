@@ -8,6 +8,10 @@ const server = require("http").createServer(app);
 const socketIo = require("socket.io");
 const { findRoomName } = require("./controllers/codeBlock");
 
+let userCount = 0;
+let oded = 2
+
+
 let userCount = {
   filterLoop: new Set(),
   mapLoop: new Set(),
