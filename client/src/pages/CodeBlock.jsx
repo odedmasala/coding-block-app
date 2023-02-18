@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import React, { useEffect, useState, useCallback } from "react";
+import { useParams, Link, useBeforeUnload } from "react-router-dom";
 import Editor from "@monaco-editor/react";
 // import SyntaxHighlighter from "react-syntax-highlighter";
 // import { a11yDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import io from "socket.io-client";
 import smileImg from "../assets/smile-png-46519.png";
-
 
 const server_erl = import.meta.env.VITE_WS_URL;
 const CodeBlock = () => {
@@ -16,17 +15,19 @@ const CodeBlock = () => {
   const [socketEdit, setSocketEdit] = useState();
   const [userChanel, setUserChanel] = useState(null);
   const [wrongAnswer, setWrongAnswer] = useState(false);
+  const [userId, setUserId] = useState(Math.floor(Math.random() * 100000));
 
   useEffect(() => {
     const socket = io(server_erl);
     setSocketEdit(socket);
     socket.on("connect", (data) => {
-      socket.emit("send-room-name", roomName);
+      socket.emit("send-room-name", {
+        roomName: roomName,
+        userId: userId,
+      });
     });
-    console.log("bla bla bla")
     //  receive codeBlock for display data in the page
     socket.on("receive-codeBlock", (data) => {
-      console.log("receive-codeBlock")
       if (!data) return;
       if (!roomData) {
         setRoomData({
@@ -35,23 +36,21 @@ const CodeBlock = () => {
           CodeToEdit: data.CodeToEdit,
           codeSolution: data.codeSolution,
         });
-        if (userChanel) return
-          setUserChanel({
-            user: data.user,
-            userCount: data.userCount,
-            isMentor: data.isMentor,
-          });
+        if (userChanel) return;
+        setUserChanel({
+          user: data.user,
+          userCount: data.userCount,
+          isMentor: data.isMentor,
+        });
       }
     });
     //  liston to solve event from the student
     socket.on("Solve-exercise", (arg) => {
-      console.log("Solve-exercise")
       setShowSmile(true);
     });
 
     // Get code changes live
     socket.on("receive-changes", (code) => {
-      console.log("receive-changes")
       if (!code) return;
       if (userChanel?.userCount === 1) {
         setEditorValue(code);
@@ -59,16 +58,23 @@ const CodeBlock = () => {
     });
     // server got error
     socket.on("connect_error", () => {
-      console.log("receive-changes")
       setTimeout(() => socket.connect(), 5000);
     });
     // server disconnect
-    socket.on("disconnect", () => console.log("server disconnected"));
+    socket.on("disconnect", () => {
+      console.log("server disconnected");
+    });
     return () => {
       socket.disconnect();
     };
   }, [userChanel]);
 
+  useBeforeUnload(
+    useCallback(() => {
+      console.log("hii hiii");
+      socketEdit?.emit("remove-user", { roomName: roomName, userId: userId }); // <-- check for null
+    }, [socketEdit, roomName, userId])
+  );
   // check codeblock script with eval global method and return massage
   const checkCodeblock = () => {
     setWrongAnswer(true);
@@ -137,7 +143,9 @@ const CodeBlock = () => {
                   </button>
                 </div>
                 {wrongAnswer ? (
-                  <h4 className="Wrong-Answer-title">Wrong Answer, check again the code</h4>
+                  <h4 className="Wrong-Answer-title">
+                    Wrong Answer, check again the code
+                  </h4>
                 ) : null}
               </div>
             )}
