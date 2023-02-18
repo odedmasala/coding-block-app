@@ -6,7 +6,6 @@ import Editor from "@monaco-editor/react";
 import io from "socket.io-client";
 import smileImg from "../assets/smile-png-46519.png";
 
-
 const server_erl = import.meta.env.VITE_WS_URL;
 const CodeBlock = () => {
   const { name: roomName } = useParams();
@@ -23,10 +22,10 @@ const CodeBlock = () => {
     socket.on("connect", (data) => {
       socket.emit("send-room-name", roomName);
     });
-    console.log("bla bla bla")
+    console.log("bla bla bla");
     //  receive codeBlock for display data in the page
     socket.on("receive-codeBlock", (data) => {
-      console.log("receive-codeBlock")
+      console.log("receive-codeBlock");
       if (!data) return;
       if (!roomData) {
         setRoomData({
@@ -35,23 +34,23 @@ const CodeBlock = () => {
           CodeToEdit: data.CodeToEdit,
           codeSolution: data.codeSolution,
         });
-        if (userChanel) return
-          setUserChanel({
-            user: data.user,
-            userCount: data.userCount,
-            isMentor: data.isMentor,
-          });
+        if (userChanel) return;
+        setUserChanel({
+          user: data.user,
+          userCount: data.userCount,
+          isMentor: data.isMentor,
+        });
       }
     });
     //  liston to solve event from the student
-    socket.on("Solve-exercise", (arg) => {
-      console.log("Solve-exercise")
+    socket.on("solve-exercise", (arg) => {
+      console.log("Solve-exercise");
       setShowSmile(true);
     });
 
     // Get code changes live
     socket.on("receive-changes", (code) => {
-      console.log("receive-changes")
+      console.log("receive-changes");
       if (!code) return;
       if (userChanel?.userCount === 1) {
         setEditorValue(code);
@@ -59,7 +58,7 @@ const CodeBlock = () => {
     });
     // server got error
     socket.on("connect_error", () => {
-      console.log("receive-changes")
+      console.log("receive-changes");
       setTimeout(() => socket.connect(), 5000);
     });
     // server disconnect
@@ -82,19 +81,21 @@ const CodeBlock = () => {
       setWrongAnswer(false);
     }, 3000);
   };
-
+  // handle edit changes and sent the event send-changes to the server
   const handleEditorChange = (editorValue) => {
     setEditorValue(editorValue);
     socketEdit.emit("send-changes", { roomName, code: editorValue });
   };
   return (
     <>
+      {/* if statement on the rome data state, that show the rome detail of loading string */}
       {roomData ? (
         <>
           <div className="codeBlock-container">
             <div className="codeBlock-title">
               <h1>CodeBlock</h1>
             </div>
+            {/* if statement on the rome showSmile state, that show if the student right a emoji smile  or the editor */}
             {showSmile ? (
               <div className="correct-answer">
                 <img src={smileImg} width="300" alt="smile picture" />
@@ -137,7 +138,9 @@ const CodeBlock = () => {
                   </button>
                 </div>
                 {wrongAnswer ? (
-                  <h4 className="Wrong-Answer-title">Wrong Answer, check again the code</h4>
+                  <h4 className="Wrong-Answer-title">
+                    Wrong Answer, check again the code
+                  </h4>
                 ) : null}
               </div>
             )}

@@ -1,15 +1,17 @@
 /*IMPORT DEPENDENCE*/
-require("dotenv").config();
-require("./config/database");
+
 const app = require("express")();
 const cors = require("cors");
 app.use(cors());
 const server = require("http").createServer(app);
 const socketIo = require("socket.io");
 const { findRoomName } = require("./controllers/codeBlock");
-let userCount = 0;
 
+/*CONFIGURATION*/
+require("dotenv").config();
+require("./config/database");
 
+/*CORS CONNECTION*/
 const io = socketIo(server, {
   cors: {
     origin: "*",
@@ -17,8 +19,10 @@ const io = socketIo(server, {
   },
 });
 
-
+  /*SOCKET NETWORK  */
+  let userCount = 0;
 io.on("connection", (socket) => {
+    // connect event
   console.log("connection");
   userCount++;
   console.log(
@@ -28,8 +32,6 @@ io.on("connection", (socket) => {
 
   // Get room and send back the code
   socket.on("send-room-name", async (roomName) => {
-    console.log("send-room-name");
-
     const CodeBlockRoom = await findRoomName(roomName);
     socket.join(roomName);
     socket.emit("receive-codeBlock", {
@@ -39,26 +41,24 @@ io.on("connection", (socket) => {
       isMentor : userCount ===1 ? true : false
     });
   });
+   // sent solve-exercise to the other member at the room
 socket.on("correct-answer",(roomName)=>{
-  console.log("correct-answer");
-  
-  socket.broadcast.to(roomName).emit("Solve-exercise");
+  socket.broadcast.to(roomName).emit("solve-exercise");
 })
   // Code changes handler
   socket.on("send-changes", (changes) => {
-    console.log("send-changes");
-
     socket.broadcast
       .to(changes?.roomName)
       .emit("receive-changes", changes?.code);
   });
-
+// disconnect event
   socket.on("disconnect", () => {
     userCount--;
     console.log("User disconnect, total user left", userCount);
   });
 });
 
+ /*TURNING ON THE SERVER  */
 const PORT = process.env.PORT || 3001;
 server.listen(PORT, (err) => {
   if (err) console.log(err);
