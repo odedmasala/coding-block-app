@@ -44,7 +44,6 @@ io.on("connection", (socket) => {
     socket.emit("receive-codeBlock", {
       ...CodeBlockRoom._doc,
       user: socket.id,
-      userCount: userCount,
       isMentor: userCount[romeInit.roomName].size === 1,
     });
   });

@@ -37,7 +37,6 @@ const CodeBlock = () => {
         if (userChanel) return;
         setUserChanel({
           user: data.user,
-          userCount: data.userCount,
           isMentor: data.isMentor,
         });
       }
