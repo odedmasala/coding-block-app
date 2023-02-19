@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Editor from "@monaco-editor/react";
 import io from "socket.io-client";
-import smileImg from "../assets/smile-png-46519.png";
+import smileImg from "../../assets/smile-png-46519.png";
 
 const server_erl = import.meta.env.VITE_WS_URL;
 const CodeBlock = () => {

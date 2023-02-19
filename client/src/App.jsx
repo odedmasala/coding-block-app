@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, } from "react-router-dom";
 // Pages
-import Lobby from "./pages/Lobby";
-import CodeBlock from "./pages/CodeBlock";
+import Lobby from "./pages/lobby/Lobby";
+import CodeBlock from "./pages/codeBlock/CodeBlock";
 import "./styles/App.css"
 function App() {
   return (
