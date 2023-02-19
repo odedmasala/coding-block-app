@@ -87,14 +87,14 @@ const CodeBlock = () => {
   };
   return (
     <>
-      {/* if statement on the rome data state, that show the rome detail of loading string */}
+      {/* if statement on the rome data state, that show the rome detail or a loading string */}
       {roomData ? (
         <>
           <div className="codeBlock-container">
             <div className="codeBlock-title">
               <h1>CodeBlock</h1>
             </div>
-            {/* if statement on the rome showSmile state, that show if the student right a emoji smile  or the editor */}
+            {/* if statement on the showSmile state, that show if the student right a emoji smile  or the editor */}
             {showSmile ? (
               <div className="correct-answer">
                 <img src={smileImg} width="300" alt="smile picture" />
