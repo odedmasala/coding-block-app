@@ -1,7 +1,5 @@
 /*IMPORT DEPENDENCE*/
 const app = require("express")();
-const cors = require("cors");
-app.use(cors());
 const server = require("http").createServer(app);
 const socketIo = require("socket.io");
 const socketLogic = require("./socket/socketLogic");
