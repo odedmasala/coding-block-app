@@ -1,6 +1,8 @@
  # coding-block-app
 
 A convenient app and code-learning environment that connects students and mentors. The app contains a client built with Vite React and a server built with Node.js Express and Socket.io.
+## Link to site
+https://coding-block-app.vercel.app
 
 ## Getting Started
 
